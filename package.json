@@ -1,0 +1,14 @@
+{
+  "name": "controle-de-dieta-diaria-api",
+  "version": "1.0.0",
+  "description": "An API Node with Prisma for management of dayli diet",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Madson - Mayra - Rodrigo",
+  "license": "ISC",
+  "dependencies": {
+    "prisma": "^5.11.0"
+  }
+}
