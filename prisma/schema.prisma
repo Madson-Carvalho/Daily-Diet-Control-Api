@@ -27,6 +27,7 @@ model Users {
 
 model Meals {
   id          String   @id @default(uuid())
+  name        String   @db.VarChar(50)
   description String?  @db.VarChar(50)
   dateTime    DateTime
   isInDiet    Boolean  @default(true)
