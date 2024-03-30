@@ -1,4 +1,4 @@
-import {prisma} from "../utils";
+const prisma = require("../utils");
 
 class UsersController {
     async create(request, response) {
@@ -16,11 +16,12 @@ class UsersController {
                     weight: requestBody.weight,
                 }
             })
+
+            response.json(user);
         } catch (e) {
             return response.status(409).send();
         }
     }
-
 
 }
 

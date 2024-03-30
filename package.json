@@ -4,7 +4,8 @@
   "description": "An API Node with Prisma for management of dayli diet",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/server.js"
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js"
   },
   "author": "Madson Carvalho - Mayra Carvalho - Rodrigo Dondé",
   "license": "ISC",
@@ -13,5 +14,8 @@
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",
     "prisma": "^5.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
