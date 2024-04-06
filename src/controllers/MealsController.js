@@ -88,7 +88,7 @@ class MealsController {
 
             response.json(meals);
         } catch (e) {
-            // return response.status(409).send();
+            return response.status(409).send();
         }
     }
 
