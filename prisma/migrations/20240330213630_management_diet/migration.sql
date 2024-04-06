@@ -5,9 +5,9 @@ CREATE TABLE `Users` (
     `email` VARCHAR(50) NOT NULL,
     `password` VARCHAR(50) NOT NULL,
     `age` INTEGER NULL,
-    `height` INTEGER NULL,
+    `height` DOUBLE NULL,
     `phone` VARCHAR(45) NULL,
-    `weight` INTEGER NULL,
+    `weight` DOUBLE NULL,
 
     UNIQUE INDEX `Users_name_key`(`name`),
     UNIQUE INDEX `Users_email_key`(`email`),
@@ -18,8 +18,9 @@ CREATE TABLE `Users` (
 -- CreateTable
 CREATE TABLE `Meals` (
     `id` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(50) NOT NULL,
     `description` VARCHAR(50) NULL,
-    `dateTime` DATETIME(3) NOT NULL,
+    `dateTime` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `isInDiet` BOOLEAN NOT NULL DEFAULT true,
     `idUser` VARCHAR(191) NOT NULL,
 

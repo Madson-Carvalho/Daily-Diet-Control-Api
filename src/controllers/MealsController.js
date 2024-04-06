@@ -1,11 +1,11 @@
-const { prisma } = require("../utils");
+const prisma = require("../utils");
 
 class MealsController {
     async create(request, response) {
         try {
             const requestBody = request.body;
 
-            const meals = prisma.meals.create({
+            const meals = await prisma.meals.create({
                 data: {
                     name: requestBody.name,
                     description: requestBody.description,
@@ -17,7 +17,7 @@ class MealsController {
 
             response.json(meals);
         } catch (e) {
-            return response.response.status(409).send();
+            return response.status(409).send();
         }
     }
 
@@ -26,7 +26,7 @@ class MealsController {
             const requestBody = request.body;
             const param = request.params;
 
-            const result = prisma.meals.update({
+            const result = await prisma.meals.update({
                 where: {
                     id: param.id
                 },
@@ -40,7 +40,7 @@ class MealsController {
 
             response.json(result);
         } catch (e) {
-            return response.response.status(409).send();
+            return response.status(409).send();
         }
     }
 
@@ -48,7 +48,7 @@ class MealsController {
         try {
             const param = request.params;
 
-            const result = prisma.meals.delete({
+            const result = await prisma.meals.delete({
                 where: {
                     id: param.id
                 }
@@ -56,7 +56,7 @@ class MealsController {
 
             return response.status(200);
         } catch (e) {
-            return response.response.status(409).send();
+            return response.status(409).send();
         }
     }
 
@@ -66,7 +66,7 @@ class MealsController {
 
             const meal = await prisma.meals.findUnique({
                 where: {
-                    name: param.name,
+                    id: param.id,
                 },
                 select: {
                     name: true,
@@ -76,76 +76,74 @@ class MealsController {
                 },
             })
 
-            return response.json(meal);
+            response.json(meal);
         } catch (e) {
-            return response.response.status(409).send();
+            return response.status(409).send();
         }
     }
 
-    async findAll(response) {
+    async findAll(request, response) {
         try {
             const meals = await prisma.meals.findMany()
 
-            return response.json(meals);
+            response.json(meals);
         } catch (e) {
-            return response.response.status(409).send();
+            // return response.status(409).send();
         }
     }
 
-    async countAllMeals(response) {
+    async countAllMeals(request, response) {
         try {
             const quantityMeals = await prisma.meals.count()
 
             return response.json(quantityMeals);
         } catch (e) {
-            return response.response.status(409).send();
+            return response.status(409).send();
         }
     }
 
-    async countAllMealsInDiet(response) {
+    async countAllMealsInDiet(request, response) {
         try {
-            const quantityMealsInDiet = await prisma.meals.findMany({
-                include: {
-                    _count: {
-                        select: { isInDiet: true },
-                    },
-                },
-            })
+            const quantityMealsInDiet = await prisma.meals.count({
+                where: {
+                    isInDiet: true
+                }
+            });
 
             return response.json(quantityMealsInDiet);
         } catch (e) {
-            return response.response.status(409).send();
+            return response.status(409).send();
         }
     }
 
-    async countAllMealsOutDiet(response) {
+    async countAllMealsOutDiet(request, response) {
         try {
-            const quantityMealsOutDiet = await prisma.meals.findMany({
-                include: {
-                    _count: {
-                        select: { isInDiet: false },
-                    },
-                },
-            })
+            const quantityMealsOutDiet = await prisma.meals.count({
+                where: {
+                    isInDiet: false
+                }
+            });
 
             return response.json(quantityMealsOutDiet);
         } catch (e) {
-            return response.response.status(409).send();
+            return response.status(409).send();
         }
     }
 
-    async getLongerMealSequence(response) {
+    async getLongerMealSequence(request, response) {
         try {
-            const longerMealSequence = await prisma.meals.groupBy({
-                by: ['dateTime'],
-                _sum: {
-                    isInDiet: true,
+            const longerMealSequence = await prisma.meals.count({
+                where: {
+                    isInDiet: true
                 },
-            })
+                groupyBy: {
+                    dateTime
+                }
+            });
 
             return response.json(longerMealSequence);
         } catch (e) {
-            return response.response.status(409).send();
+            return response.status(409).send();
         }
     }
 }

@@ -19,9 +19,9 @@ model Users {
   email    String  @unique @db.VarChar(50)
   password String  @unique @db.VarChar(50)
   age      Int?
-  height   Int?
+  height   Float?
   phone    String? @db.VarChar(45)
-  weight   Int?
+  weight   Float?
   Meals    Meals[]
 }
 
@@ -29,7 +29,7 @@ model Meals {
   id          String   @id @default(uuid())
   name        String   @db.VarChar(50)
   description String?  @db.VarChar(50)
-  dateTime    DateTime
+  dateTime    DateTime @default(now())
   isInDiet    Boolean  @default(true)
   User        Users    @relation(fields: [idUser], references: [id])
   idUser      String
