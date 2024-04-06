@@ -8,4 +8,6 @@ const usersController = new UsersController()
 
 usersRoutes.post('/create-user', usersController.create);
 
+usersRoutes.get('/login', usersController.login);
+
 module.exports = usersRoutes
