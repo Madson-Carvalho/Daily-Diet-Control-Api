@@ -8,9 +8,9 @@ const mealsController = new MealsController()
 
 mealsRoutes.post("/create-meal", mealsController.create);
 
-mealsRoutes.put("/edit-meal", mealsController.update);
+mealsRoutes.put("/edit-meal/:id", mealsController.update);
 
-mealsRoutes.delete("/remove-meal", mealsController.delete);
+mealsRoutes.delete("/remove-meal/:id", mealsController.delete);
 
 mealsRoutes.get("/find-meals/:userId", mealsController.findAll);
 
