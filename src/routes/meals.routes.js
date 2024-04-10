@@ -12,7 +12,7 @@ mealsRoutes.put("/edit-meal", mealsController.update);
 
 mealsRoutes.delete("/remove-meal", mealsController.delete);
 
-mealsRoutes.get("/find-meals/:UserId", mealsController.findAll);
+mealsRoutes.get("/find-meals/:userId", mealsController.findAll);
 
 mealsRoutes.get("/find-meal/:id",mealsController.findByName);
 
@@ -20,7 +20,7 @@ mealsRoutes.get("/count-meals", mealsController.countAllMeals);
 
 mealsRoutes.get("/count-diet-meals", mealsController.countAllMealsInDiet);
 
-mealsRoutes.get("/count-no-diet-meals", mealsController.countAllMealsOutDiet);
+mealsRoutes.get("/count-no-diet-meals/:userId", mealsController.countAllMealsOutDiet);
 
 mealsRoutes.get("/find-longest-diet-meals-sequence/:id", mealsController.getLongerMealSequence);
 

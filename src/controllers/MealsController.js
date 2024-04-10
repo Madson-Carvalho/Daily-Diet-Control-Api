@@ -110,8 +110,11 @@ class MealsController {
 
     async countAllMealsInDiet(request, response) {
         try {
+            const userId = request.params.userId;
+
             const quantityMealsInDiet = await prisma.meals.count({
                 where: {
+                    idUser: userId,
                     isInDiet: true
                 }
             });
@@ -124,6 +127,8 @@ class MealsController {
 
     async countAllMealsOutDiet(request, response) {
         try {
+
+
             const quantityMealsOutDiet = await prisma.meals.count({
                 where: {
                     isInDiet: false
