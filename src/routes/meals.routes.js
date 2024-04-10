@@ -12,7 +12,7 @@ mealsRoutes.put("/edit-meal", mealsController.update);
 
 mealsRoutes.delete("/remove-meal", mealsController.delete);
 
-mealsRoutes.get("/find-meals", mealsController.findAll);
+mealsRoutes.get("/find-meals/:UserId", mealsController.findAll);
 
 mealsRoutes.get("/find-meal/:id",mealsController.findByName);
 

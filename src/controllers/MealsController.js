@@ -84,11 +84,17 @@ class MealsController {
 
     async findAll(request, response) {
         try {
-            const meals = await prisma.meals.findMany()
+            const userId = request.params.userId;
+    
+            const meals = await prisma.meals.findMany({
+                where: {
+                    idUser: userId,
+                },
+            });
 
             response.json(meals);
         } catch (e) {
-            // return response.status(409).send();
+            return response.status(409).send();
         }
     }
 
