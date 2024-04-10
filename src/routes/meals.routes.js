@@ -22,6 +22,6 @@ mealsRoutes.get("/count-diet-meals", mealsController.countAllMealsInDiet);
 
 mealsRoutes.get("/count-no-diet-meals", mealsController.countAllMealsOutDiet);
 
-mealsRoutes.get("/find-longest-diet-meals-sequence", mealsController.getLongerMealSequence);
+mealsRoutes.get("/find-longest-diet-meals-sequence/:id", mealsController.getLongerMealSequence);
 
 module.exports = mealsRoutes
