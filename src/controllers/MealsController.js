@@ -100,7 +100,13 @@ class MealsController {
 
     async countAllMeals(request, response) {
         try {
-            const quantityMeals = await prisma.meals.count()
+            const userId = request.params.userId;
+
+            const quantityMeals = await prisma.meals.count({
+                where: {
+                    idUser: userId,
+                }
+            })
 
             return response.json(quantityMeals);
         } catch (e) {
@@ -127,10 +133,11 @@ class MealsController {
 
     async countAllMealsOutDiet(request, response) {
         try {
-
+            const userId = request.params.userId;
 
             const quantityMealsOutDiet = await prisma.meals.count({
                 where: {
+                    idUser: userId,
                     isInDiet: false
                 }
             });
@@ -143,8 +150,7 @@ class MealsController {
 
     async getLongerMealSequence(request, response) {
         try {
-            
-            const userId = request.params.id;
+            const userId = request.params.userId;
     
             const meals = await prisma.meals.findMany({
                 where: {
