@@ -27,9 +27,14 @@ class UsersController {
     async login(request, response) {
         try {
             const { name, password } = request.body;
-    
-            const user = await findUserWithNameAndPassword(name, password);
-    
+
+            const user = await prisma.users.findUnique({
+                where: {
+                    name: name,
+                    password: password
+                },
+            });
+            
             if (!user) {
                 return response.status(401).json({ error: 'User or Password Incorrected' });
             }
@@ -42,22 +47,6 @@ class UsersController {
     
         } catch (error) {
             response.status(500).json({ error: "Login failed" });
-        }
-    }
-
-    async findUserWithNameAndPassword(username, password) {
-        try {
-            const user = await prisma.users.findUnique({
-                where: {
-                    name: username,
-                    password: password
-                },
-            });
-
-            return !!user;
-
-        } catch (error) {
-            return response.status(409).send();
         }
     }
 }

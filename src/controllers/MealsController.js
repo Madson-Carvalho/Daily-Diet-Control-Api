@@ -150,13 +150,14 @@ class MealsController {
 
     async getLongerMealSequence(request, response) {
         try {
+            const userId = request.params.userId;
+
             const meals = await prisma.meals.findMany({
                 where: {
                     idUser: userId,
-                    isInDiet: true
                 },
                 orderBy: {
-                    dateTime: 'asc'
+                    dateTime: 'desc'
                 }
             });
 
@@ -165,19 +166,19 @@ class MealsController {
             let processedMeals = [];
 
             for (let i = 0; i < meals.length; i++) {
-                const meal = meals[i];
-                const nextMeal = meals[i + 1];
 
-                if (nextMeal && nextMeal.dateTime - meal.dateTime <= 10800000) {
+                const meal = meals[i];
+
+                if (meal.isInDiet) {
                     currentSequenceLength++;
-                    processedMeals.push({ meal });
                 } else {
+                    processedMeals.push(meal)
                     longestSequenceLength = Math.max(longestSequenceLength, currentSequenceLength);
                     currentSequenceLength = 0;
                 }
             }
 
-            return response.json({ longestSequence: longestSequenceLength + 1, processedMeals});
+            return response.json({ longestSequence: longestSequenceLength, processedMeals});
         } catch (e) {
             return response.status(409).send();
         }
